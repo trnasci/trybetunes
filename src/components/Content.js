@@ -13,6 +13,9 @@ class Content extends React.Component {
     return (
       <Switch>
         <Route exact path="/" component={ Login } />
+        <Route exact path="/">
+          <Login />
+        </Route>
         <Route path="/search" component={ Search } />
         <Route path="/album/:id" component={ Album } />
         <Route path="/favorites" component={ Favorites } />
