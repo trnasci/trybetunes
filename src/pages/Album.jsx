@@ -20,16 +20,13 @@ class Album extends React.Component {
     const { match: { params: { id } } } = this.props;
     this.setState({ loading: true });
     const tracks = await getMusics(id);
-    this.setState({ trackList: [...tracks.slice(1)],
-      albumDescription: tracks.shift(),
+    this.setState({ trackList: [...tracks.filter((e) => e.kind === 'song')],
+      albumDescription: tracks[0],
       loading: false });
   };
 
   render() {
     const { trackList, loading, albumDescription } = this.state;
-    console.log(albumDescription);
-    console.log(trackList);
-
     return (
       <div data-testid="page-album">
         <Header />
@@ -39,12 +36,12 @@ class Album extends React.Component {
               src={ albumDescription.artworkUrl100 }
               alt={ albumDescription.collectionName }
             />
-            <div data-testid="artist-name">
-              {albumDescription.artistName}
-            </div>
-            <div data-testid="album-name">
+            <h2 data-testid="album-name">
               {albumDescription.collectionName}
-            </div>
+            </h2>
+            <h3 data-testid="artist-name">
+              {albumDescription.artistName}
+            </h3>
             <div>
               {trackList.map((item) => (<MusicCard
                 previewUrl={ item.previewUrl }
