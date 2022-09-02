@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../pages/Loading';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, removeSong } from '../services/favoriteSongsAPI';
 
 class MusicCard extends React.Component {
   state = {
@@ -10,11 +10,17 @@ class MusicCard extends React.Component {
 
   onInputChange = async (event) => {
     const { target } = event;
-    const { id } = target;
+    const { id, checked } = target;
     const { trackList } = this.props;
-    this.setState({ loading: true });
-    await addSong(trackList.filter((e) => e.trackId === id));
-    this.setState({ loading: false });
+    if (checked === true) {
+      this.setState({ loading: true });
+      await addSong(trackList.filter((e) => e.trackId === Number(id)));
+      this.setState({ loading: false });
+    } else {
+      this.setState({ loading: true });
+      await removeSong(trackList.filter((e) => e.trackId === Number(id)));
+      this.setState({ loading: false });
+    }
   };
 
   render() {
