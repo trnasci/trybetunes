@@ -6,40 +6,58 @@ import { addSong, removeSong } from '../services/favoriteSongsAPI';
 class MusicCard extends React.Component {
   state = {
     loading: false,
+    checked: false,
   };
+
+  componentDidMount() {
+    this.isFavorite();
+  }
 
   onInputChange = async (event) => {
     const { target } = event;
-    const { id, checked } = target;
+    const { id } = target;
     const { trackList } = this.props;
-    if (checked === true) {
+    const { checked } = this.state;
+    const trackfav = trackList.filter((e) => e.trackId === Number(id));
+    if (checked === false) {
       this.setState({ loading: true });
-      await addSong(trackList.filter((el) => el.trackId === Number(id)));
-      this.setState({ loading: false });
+      await addSong(trackfav[0]);
+      this.setState({ loading: false, checked: true });
     } else {
       this.setState({ loading: true });
-      await removeSong(trackList.filter((e) => e.trackId === Number(id)));
-      this.setState({ loading: false });
+      await removeSong(trackfav[0]);
+      this.setState({ loading: false, checked: false });
+    }
+  };
+
+  isFavorite = () => {
+    const { id, myFavoriteSongs } = this.props;
+    const favorite = myFavoriteSongs.filter((e) => e.trackId === Number(id));
+    if (favorite.length > 0) {
+      this.setState({ checked: true });
+    } else {
+      this.setState({ checked: false });
     }
   };
 
   render() {
-    const { previewUrl, name, id } = this.props;
-    const { loading } = this.state;
+    const { previewUrl, name, id, myFavoriteSongs } = this.props;
+    const { loading, checked } = this.state;
+    console.log(myFavoriteSongs);
     return (
       <div>
-        { loading && <Loading /> }
         <div>
           <h3>
             { name }
           </h3>
           <label htmlFor="name">
             <input
-              name="checked"
+              name="favorite"
               type="checkbox"
               data-testid={ `checkbox-music-${id}` }
               id={ id }
               onChange={ this.onInputChange }
+              checked={ checked }
             />
           </label>
           <audio data-testid="audio-component" src={ previewUrl } controls>
@@ -48,6 +66,7 @@ class MusicCard extends React.Component {
             <code>audio</code>
           </audio>
         </div>
+        <span>{ loading && <Loading /> }</span>
       </div>
     );
   }

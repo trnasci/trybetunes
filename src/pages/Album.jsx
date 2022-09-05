@@ -30,12 +30,11 @@ class Album extends React.Component {
   favoriteList = async () => {
     this.setState({ loading: true });
     const myFavoriteSongs = await getFavoriteSongs();
-    this.setState({ loading: false, myFavoriteList: myFavoriteSongs });
+    this.setState({ loading: false, myFavoriteSongs: [...myFavoriteSongs] });
   };
 
   render() {
-    const { trackList, loading, albumDescription, myFavoriteList } = this.state;
-    console.log(myFavoriteList);
+    const { trackList, loading, albumDescription, myFavoriteSongs } = this.state;
     return (
       <div data-testid="page-album">
         <Header />
@@ -58,6 +57,7 @@ class Album extends React.Component {
                 name={ item.trackName }
                 id={ item.trackId }
                 trackList={ trackList }
+                myFavoriteSongs={ myFavoriteSongs }
               />))}
             </div>
           </div>
