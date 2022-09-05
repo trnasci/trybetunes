@@ -14,7 +14,7 @@ class MusicCard extends React.Component {
     const { trackList } = this.props;
     if (checked === true) {
       this.setState({ loading: true });
-      await addSong(trackList.filter((e) => e.trackId === Number(id)));
+      await addSong(trackList.filter((el) => el.trackId === Number(id)));
       this.setState({ loading: false });
     } else {
       this.setState({ loading: true });

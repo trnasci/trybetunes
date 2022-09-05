@@ -13,9 +13,9 @@ class Album extends React.Component {
     loading: false,
   };
 
-  componentDidMount() {
-    this.getAlbum();
-    this.favoriteList();
+  async componentDidMount() {
+    await this.getAlbum();
+    await this.favoriteList();
   }
 
   getAlbum = async () => {
