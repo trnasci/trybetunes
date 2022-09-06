@@ -26,25 +26,31 @@ class Login extends React.Component {
       redirect ? <Redirect to="/search" /> : (
         <div data-testid="page-login">
           { loading ? <Loading /> : (
-            <form>
-              <label htmlFor="name">
-                <input
-                  name="name"
-                  type="text"
-                  data-testid="login-name-input"
-                  value={ name }
-                  onChange={ onInputChange }
-                />
-              </label>
-              <button
-                data-testid="login-submit-button"
-                type="button"
-                disabled={ loginButtonDisable }
-                onClick={ this.buttonLoginClick }
-              >
-                Entrar
-              </button>
-            </form>)}
+            <section>
+              <img
+                src="src/pages/images/Sem título.png"
+                alt="logo"
+              />
+              <form>
+                <label htmlFor="name">
+                  <input
+                    name="name"
+                    type="text"
+                    data-testid="login-name-input"
+                    value={ name }
+                    onChange={ onInputChange }
+                  />
+                </label>
+                <button
+                  data-testid="login-submit-button"
+                  type="button"
+                  disabled={ loginButtonDisable }
+                  onClick={ this.buttonLoginClick }
+                >
+                  Entrar
+                </button>
+              </form>
+            </section>)}
         </div>)
     );
   }
