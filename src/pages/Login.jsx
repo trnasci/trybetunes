@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { createUser } from '../services/userAPI';
 import Loading from './Loading';
+import logoTrn from './images/Sem título.png';
+import './Login.css';
 
 class Login extends React.Component {
   state = {
@@ -26,9 +28,9 @@ class Login extends React.Component {
       redirect ? <Redirect to="/search" /> : (
         <div data-testid="page-login">
           { loading ? <Loading /> : (
-            <section>
+            <section className="page-login">
               <img
-                src="src/pages/images/Sem título.png"
+                src={ logoTrn }
                 alt="logo"
               />
               <form>
@@ -39,6 +41,7 @@ class Login extends React.Component {
                     data-testid="login-name-input"
                     value={ name }
                     onChange={ onInputChange }
+                    placeholder="Usuario"
                   />
                 </label>
                 <button
